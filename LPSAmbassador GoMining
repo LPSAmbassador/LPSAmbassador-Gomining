@@ -1,0 +1,165 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join GoMining with LPSAmbassador's Referral Code</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #4B0082; /* Viola scuro in stile GoMining */
+            background-image: linear-gradient(rgba(75, 0, 130, 0.8), rgba(75, 0, 130, 0.8)), url('https://images.unsplash.com/photo-1620641657778-0c369e782ca0?q=80&w=1470&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Inter', sans-serif;
+        }
+        .nft-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .nft-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+        }
+        .nft-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #2563EB, #3B82F6);
+            transition: transform 0.2s ease;
+        }
+        .btn-primary:hover {
+            transform: scale(1.05);
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            transition: background 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body class="font-sans text-white">
+    <header class="py-8">
+        <div class="container mx-auto text-center fade-in">
+            <h1 class="text-5xl font-bold mb-2">Join GoMining with LPSAmbassador</h1>
+            <p class="text-xl text-gray-200">Use my referral code <span class="font-bold text-blue-300">eSFSX</span> and get 5% cashback on your first miner purchase!</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto py-12 px-4">
+        <section class="text-center fade-in">
+            <h2 class="text-3xl font-semibold mb-4">Why Choose GoMining?</h2>
+            <p class="text-lg mb-8 max-w-3xl mx-auto text-gray-200">
+                GoMining revolutionizes Bitcoin mining with virtual miners backed by real hardware. Earn daily BTC rewards, trade unique NFTs, and enjoy a seamless crypto experience. Sign up with my referral code to unlock exclusive benefits!
+            </p>
+            <div class="nft-card p-8 inline-block max-w-md w-full">
+                <p class="text-xl font-medium mb-4">Referral Code: <span class="font-bold text-blue-300">eSFSX</span></p>
+                <p class="text-lg mb-6">Click below to start mining with GoMining:</p>
+                <a href="https://gomining.com/?ref=eSFSX" target="_blank" class="inline-block btn-primary text-white font-semibold py-3 px-8 rounded-lg">Join GoMining Now</a>
+                <button id="copyLink" class="mt-4 btn-secondary text-white font-semibold py-2 px-6 rounded-lg">Copy Referral Link</button>
+            </div>
+        </section>
+
+        <section class="mt-16 fade-in">
+            <h2 class="text-3xl font-semibold text-center mb-8">How It Works</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="nft-card p-6 text-center">
+                    <img src="https://pbs.twimg.com/media/Gzfbqb_WsAAnjhj.jpg" alt="GoMining Sign Up Interface" class="nft-image">
+                    <h3 class="text-xl font-semibold mb-2">1. Sign Up</h3>
+                    <p class="text-gray-200">Register on GoMining using my referral link or code <span class="font-bold text-blue-300">eSFSX</span> to get 5% cashback on your first miner purchase.</p>
+                </div>
+                <div class="nft-card p-6 text-center">
+                    <img src="https://pbs.twimg.com/media/Gzdm0EdWwAAwTGt.jpg" alt="GoMining Create Miner Interface" class="nft-image">
+                    <h3 class="text-xl font-semibold mb-2">2. Create Your Miner</h3>
+                    <p class="text-gray-200">Set up your virtual miner NFT and start earning daily Bitcoin rewards powered by GoMining’s data centers.</p>
+                </div>
+                <div class="nft-card p-6 text-center">
+                    <img src="https://pbs.twimg.com/media/Gzfbp9pW8AAz5hG.jpg" alt="GoMining Rewards Dashboard" class="nft-image">
+                    <h3 class="text-xl font-semibold mb-2">3. Earn Rewards</h3>
+                    <p class="text-gray-200">Collect daily BTC rewards, enjoy 5% cashback, and share your own referral link to earn more!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 bg-opacity-90 py-8 mt-16">
+        <div class="container mx-auto text-center fade-in">
+            <p class="text-gray-300">&copy; 2025 GoMining Referral by LPSAmbassador. All rights reserved.</p>
+            <p class="mt-2 text-gray-300">Follow me on X: <a href="https://x.com/LPSAmbassador" class="underline hover:text-blue-300" target="_blank">@LPSAmbassador</a></p>
+            <p class="mt-2 text-gray-300">Have questions? <a href="https://t.me/GoMiningGlobal" class="underline hover:text-blue-300" target="_blank">Contact GoMining Support</a></p>
+        </div>
+    </footer>
+
+    <script>
+        const copyButton = document.getElementById('copyLink');
+        copyButton.addEventListener('click', () => {
+            const referralLink = 'https://gomining.com/?ref=eSFSX';
+            navigator.clipboard.writeText(referralLink).then(() => {
+                alert('Referral link copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy the link. Please try again.');
+            });
+        });
+    </script>
+</body>
+</html>
